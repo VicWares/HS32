@@ -2,8 +2,9 @@ package org.example;
 /*******************************************************************
  * Covers NFL Extraction Tool
  * Copyright 2020 Dan Farris
- * version 221007 HelloSelenium3
+ * version 230623
  *******************************************************************/
+import com.beust.jcommander.Parameterized;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -66,6 +67,7 @@ public class ExcelBuilder
     private HashMap <String,String> homeCompleteNameMap = new HashMap();
     private HashMap <String,String> awayCompleteNameMap = new HashMap();//e.g Dallas Cowboys
     private HashMap<String, String> awayMoneylineCloseOddsMap = new HashMap<>();
+
     public XSSFWorkbook buildExcel(XSSFWorkbook sportDataWorkbook, String dataEventID, int eventIndex, String gameIdentifier)
     {
         sportDataSheet = sportDataWorkbook.getSheet("Data");
@@ -105,6 +107,10 @@ public class ExcelBuilder
         sportDataSheet.getRow(eventIndex).createCell(3);
         sportDataSheet.getRow(eventIndex).getCell(3).setCellStyle(leftStyle);
         sportDataSheet.getRow(eventIndex).getCell(3).setCellValue("Week " + weekNumber);
+
+        sportDataSheet.getRow(eventIndex).createCell(8);// Game Time e.g. 20, Game Hour only; 24 hour local time
+        sportDataSheet.getRow(eventIndex).getCell(8).setCellStyle(leftStyle);
+        sportDataSheet.getRow(eventIndex).getCell(8).setCellValue(DataCollector.gameTimeMap.get(dataEventID));
 
         sportDataSheet.getRow(eventIndex).createCell(10);// Home team full name e.g. Dallas Coyboys Column K11
         sportDataSheet.getRow(eventIndex).getCell(10).setCellStyle(leftStyle);

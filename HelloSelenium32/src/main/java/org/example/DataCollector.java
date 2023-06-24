@@ -2,9 +2,10 @@ package org.example;
 /*******************************************************************
  * Covers NFL Extraction Tool
  * Copyright 2020 Dan Farris
- * version 221007 HelloSelenium3
+ * version 230623
  * Builds data event id array and calendar date array
  *******************************************************************/
+import com.google.common.hash.BloomFilter;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
@@ -47,8 +48,6 @@ public class DataCollector
     private HashMap<String, String> mlHomeOdds = new HashMap<String, String>();
     private HashMap<String, String> mlAwayOdds = new HashMap<String, String>();
     private String dataEventId;
-    private String MLhomeOdds;
-    private String MLawayOdds;
     private String homeTeamNickname;//e.g. Browns...data-home-team-nickname-search
     private String awayTeamNickname;//e.g Texans...data-away-team-nickname-search
     private String awayTeamFullName;//e.g. Cleveland...data-home-team-fullname-search
@@ -89,11 +88,13 @@ public class DataCollector
     private String awayTeamShortName;
     private HashMap<String, String> homeTeamCompleteNameMap = new HashMap<>();
     private HashMap<String, String> awayTeamCompleteNameMap = new HashMap<>();
+    public static HashMap<String, String> gameTimeMap = new HashMap<>();
     private String awayShortName;
     private String[] gameDateTime;
     private String homeShortName;
     private String month;
     private String day;
+
     public void collectTeamInfo(Elements weekElements)//From covers.com website for this week's matchups
     {
         for (Element e : weekElements)//Build week matchup IDs array
@@ -115,10 +116,13 @@ public class DataCollector
             dataEventId = e.attr("data-event-id");
             gameDateTime = e.attr("data-game-date").split(" ");
             gameDate = gameDateTime[0];
+            String gameTime = gameDateTime[1].split(":")[0];
+            System.out.println(".....................................gameTime: " + gameTime);
             awayTeamScore = e.attr("data-away-score");
             thisWeek = e.attr("data-competition-type");
             thisWeekGameDates.add(gameDate);
             gameDatesMap.put(dataEventId, gameDate);
+            gameTimeMap.put(dataEventId, gameTime);
             gameIdentifierMap.put(dataEventId, gameIdentifier);
             thisWeekHomeTeams.add(homeTeamCompleteName);
             thisWeekAwayTeams.add(awayTeamCompleteName);

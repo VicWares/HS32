@@ -3,7 +3,7 @@ package org.example;
  * Must be run before
  * cd /usr/bin/
  * sudo safaridriver --enable
- * version 221007 HelloSelenium3
+ * version 230623
  **********************************************************************************/
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jsoup.nodes.Element;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class Main extends JComponent
 {
     CityNameMapBuilder cityNameMapBuilder = new CityNameMapBuilder();
-    private static String version = "221007";
+    private static String version = "230623";
     private XSSFWorkbook sportDataWorkbook;
     private static HashMap<String, String> weekDateMap = new WeekDateMapBuilder().WeekDateMapBuilder();
     private HashMap<String, String> xRefMap = new HashMap<>();
